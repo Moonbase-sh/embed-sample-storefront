@@ -65,7 +65,8 @@
                     </div>
                     <div class="flex flex-col items-center justify-around">
                         <div class="pb-2 text-lg whitespace-nowrap">
-                            €0
+                            <span data-moonbase-if="product.juce-app-demo.has_discount" hidden data-moonbase-render="product.juce-app-demo.original_price" class="text-base text-gray-700 line-through mr-2"></span>
+                            <span data-moonbase-render="product.juce-app-demo.price">€0</span>
                         </div>
                         <button
                             class="whitespace-nowrap py-2 px-4 rounded text-gray-100 transition-colors duration-500 bg-blue-800 hover:bg-blue-600"
