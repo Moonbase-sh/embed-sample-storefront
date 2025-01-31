@@ -44,7 +44,7 @@
     <main class="w-full flex justify-center p-4 md:p-8">
 
         <!-- List of products -->
-        <div class="grid grid-cols-3 gap-4 max-w-screen-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-lg">
 
             <!-- Single product card -->
             <div
@@ -76,6 +76,66 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Then a couple more products -->
+            <div
+                class="rounded-lg shadow-lg hover:shadow-xl max-w-prose overflow-hidden transition-shadow duration-500">
+                <div class="aspect-square bg-blue-800">
+                    <img class="h-full w-auto mx-auto"
+                        src="https://assets.moonbase.sh/demo/products/juce-app-demo/icon/5128ac40-c270-44ad-ba3d-97026e257ccc.png"
+                        alt="">
+                </div>
+                <div class="flex p-4 items-center">
+                    <div class="flex-grow">
+                        <h2 class="pb-4 text-xl font-semibold text-gray-800">
+                            JUCE Bundle
+                        </h2>
+                        <p class="text-gray-700">
+                            Contains all JUCE apps
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center justify-around">
+                        <div class="pb-2 text-lg whitespace-nowrap">
+                            <span data-moonbase-if="bundle.juce-bundle.has_discount" hidden data-moonbase-render="bundle.juce-bundle.original_price" class="text-base text-gray-700 line-through mr-2"></span>
+                            <span data-moonbase-render="bundle.juce-bundle.price">€0</span>
+                        </div>
+                        <button
+                            class="whitespace-nowrap py-2 px-4 rounded text-gray-100 transition-colors duration-500 bg-blue-800 hover:bg-blue-600"
+                            onclick="Moonbase.add_to_cart({ bundle_id: 'juce-bundle' })">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="rounded-lg shadow-lg hover:shadow-xl max-w-prose overflow-hidden transition-shadow duration-500">
+                <div class="aspect-square bg-blue-800">
+                    <img class="h-full w-auto mx-auto"
+                        src="https://assets.moonbase.sh/demo/products/demo-app/icon/e74f3a4e-bfa4-4c2c-b737-9533fbc01697.png"
+                        alt="">
+                </div>
+                <div class="flex p-4 items-center">
+                    <div class="flex-grow">
+                        <h2 class="pb-4 text-xl font-semibold text-gray-800">
+                            Demo app
+                        </h2>
+                        <p class="text-gray-700">
+                            General purpose demo app
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center justify-around">
+                        <div class="pb-2 text-lg whitespace-nowrap">
+                            <span data-moonbase-if="product.demo-app.has_discount" hidden data-moonbase-render="product.demo-app.original_price" class="text-base text-gray-700 line-through mr-2"></span>
+                            <span data-moonbase-render="product.demo-app.price">€0</span>
+                        </div>
+                        <button
+                            class="whitespace-nowrap py-2 px-4 rounded text-gray-100 transition-colors duration-500 bg-blue-800 hover:bg-blue-600"
+                            onclick="Moonbase.add_to_cart({ product_id: 'demo-app' })">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -85,6 +145,7 @@
             Moonbase.setup('https://demo.moonbase.sh', {
                 toolbar: {
                     enabled: true,
+                    location: 'bottom-right'
                 }
             })
         })
