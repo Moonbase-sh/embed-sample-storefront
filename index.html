@@ -158,6 +158,55 @@
                     location: 'bottom-right'
                 }
             })
+
+            Moonbase.on('added-to-cart', event => {
+                console.log('added-to-cart:', event)
+                gtag('event', 'add_to_cart', {
+                    currency: event.currency,
+                    value: event.item.price[event.currency] * event.item.quantity,
+                    items: [
+                        {
+                            item_id: event.item.product ? event.item.product.id : event.item.bundle.id,
+                            item_name: event.item.product ? event.item.product.name : event.item.bundle.name,
+                            discount: event.item.appliedDiscount ? event.item.appliedDiscount.total[event.currency] : undefined,
+                            price: event.item.price[event.currency],
+                            quantity: event.item.quantity,
+                        }
+                    ]
+                })
+            })
+
+            Moonbase.on('checkout-initiated', event => {
+                console.log('checkout-initiated:', event)
+                gtag('event', 'begin_checkout', {
+                    currency: event.total.currency,
+                    value: event.total.amount,
+                    items: event.order.items.map(item => ({
+                        item_id: item.product ? item.product.id : item.bundle.id,
+                        item_name: item.product ? item.product.name : item.bundle.name,
+                        discount: item.appliedDiscount ? item.appliedDiscount.total[event.order.currency] : undefined,
+                        price: item.price[event.currency],
+                        quantity: item.quantity,
+                    }))
+                })
+            })
+
+            Moonbase.on('checkout-completed', event => {
+                console.log('checkout-completed:', event)
+                gtag('event', 'purchase', {
+                    transaction_id: event.order.id,
+                    currency: event.order.currency,
+                    value: event.order.total.due.amount,
+                    tax: event.order.total.taxes.amount,
+                    items: event.order.items.map(item => ({
+                        item_id: item.product ? item.product.id : item.bundle.id,
+                        item_name: item.product ? item.product.name : item.bundle.name,
+                        discount: item.total.discount.amount,
+                        price: item.total.due.amount,
+                        quantity: item.quantity,
+                    }))
+                })
+            })
         })
     </script>
 
