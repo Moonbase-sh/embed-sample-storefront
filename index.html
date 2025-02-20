@@ -17,6 +17,23 @@
 
     gtag('config', 'G-WFS73YNKMX');
     </script>
+
+    <!-- Meta Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1668811230716275');
+        fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=1668811230716275&ev=PageView&noscript=1"
+    /></noscript>
 </head>
 
 <body>
@@ -174,6 +191,14 @@
                         }
                     ]
                 })
+
+                fbq('track', 'AddToCart', {
+                    currency: event.currency,
+                    value: event.item.price[event.currency] * event.item.quantity,
+                    content_ids: [event.item.product ? event.item.product.id : event.item.bundle.id],
+                    content_name: event.item.product ? event.item.product.name : event.item.bundle.name,
+                    content_type: 'product',
+                })
             })
 
             Moonbase.on('checkout-initiated', event => {
@@ -184,6 +209,20 @@
                     items: event.order.items.map(item => ({
                         item_id: item.product ? item.product.id : item.bundle.id,
                         item_name: item.product ? item.product.name : item.bundle.name,
+                        discount: item.appliedDiscount ? item.appliedDiscount.total[event.order.currency] : undefined,
+                        price: item.price[event.currency],
+                        quantity: item.quantity,
+                    }))
+                })
+
+                fbq('track', 'InitiateCheckout', {
+                    currency: event.total.currency,
+                    value: event.total.amount,
+                    num_items: event.order.items.length,
+                    content_ids: event.order.items.map(item => item.product ? item.product.id : item.bundle.id),
+                    contents: event.order.items.map(item => ({
+                        id: item.product ? item.product.id : item.bundle.id,
+                        name: item.product ? item.product.name : item.bundle.name,
                         discount: item.appliedDiscount ? item.appliedDiscount.total[event.order.currency] : undefined,
                         price: item.price[event.currency],
                         quantity: item.quantity,
@@ -203,6 +242,20 @@
                         item_name: item.product ? item.product.name : item.bundle.name,
                         discount: item.total.discount.amount,
                         price: item.total.due.amount,
+                        quantity: item.quantity,
+                    }))
+                })
+
+                fbq('track', 'Purchase', {
+                    currency: event.total.currency,
+                    value: event.total.amount,
+                    num_items: event.order.items.length,
+                    content_ids: event.order.items.map(item => item.product ? item.product.id : item.bundle.id),
+                    contents: event.order.items.map(item => ({
+                        id: item.product ? item.product.id : item.bundle.id,
+                        name: item.product ? item.product.name : item.bundle.name,
+                        discount: item.appliedDiscount ? item.appliedDiscount.total[event.order.currency] : undefined,
+                        price: item.price[event.currency],
                         quantity: item.quantity,
                     }))
                 })
