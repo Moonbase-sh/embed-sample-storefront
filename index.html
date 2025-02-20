@@ -216,8 +216,8 @@
                 })
 
                 fbq('track', 'InitiateCheckout', {
-                    currency: event.total.currency,
-                    value: event.total.amount,
+                    currency: event.order.currency,
+                    value: event.order.total.due.amount,
                     num_items: event.order.items.length,
                     content_ids: event.order.items.map(item => item.product ? item.product.id : item.bundle.id),
                     contents: event.order.items.map(item => ({
@@ -247,8 +247,8 @@
                 })
 
                 fbq('track', 'Purchase', {
-                    currency: event.total.currency,
-                    value: event.total.amount,
+                    currency: event.order.currency,
+                    value: event.order.total.due.amount,
                     num_items: event.order.items.length,
                     content_ids: event.order.items.map(item => item.product ? item.product.id : item.bundle.id),
                     contents: event.order.items.map(item => ({
