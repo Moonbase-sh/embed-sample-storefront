@@ -210,7 +210,7 @@
                         item_id: item.product ? item.product.id : item.bundle.id,
                         item_name: item.product ? item.product.name : item.bundle.name,
                         discount: item.appliedDiscount ? item.appliedDiscount.total[event.order.currency] : undefined,
-                        price: item.price[event.currency],
+                        price: item.price[event.order.currency],
                         quantity: item.quantity,
                     }))
                 })
@@ -224,7 +224,7 @@
                         id: item.product ? item.product.id : item.bundle.id,
                         name: item.product ? item.product.name : item.bundle.name,
                         discount: item.appliedDiscount ? item.appliedDiscount.total[event.order.currency] : undefined,
-                        price: item.price[event.currency],
+                        price: item.price[event.order.currency],
                         quantity: item.quantity,
                     }))
                 })
@@ -255,7 +255,7 @@
                         id: item.product ? item.product.id : item.bundle.id,
                         name: item.product ? item.product.name : item.bundle.name,
                         discount: item.appliedDiscount ? item.appliedDiscount.total[event.order.currency] : undefined,
-                        price: item.price[event.currency],
+                        price: item.total.due.amount,
                         quantity: item.quantity,
                     }))
                 })
